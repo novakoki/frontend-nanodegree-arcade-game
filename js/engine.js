@@ -79,10 +79,21 @@ var Engine = (function(global) {
      * on the entities themselves within your app.js file).
      */
     function update(dt) {
-        updateEntities(dt);
-        // checkCollisions();
+        if(!player.iswin){
+            updateEntities(dt);
+            checkCollisions();
+        }
     }
 
+    function checkCollisions() {
+        allEnemies.forEach(function(enemy){
+            if(Math.abs(player.y - enemy.y) < 70)
+                if(Math.abs(player.x - enemy.x) < 70)
+                    player = new Player();
+                //console.log(enemy.x+" "+enemy.y+" "+player.x+" "+player.y);
+        })
+        if(player.y < 0){alert("You win!!!");player.iswin = 1;}
+    }
     /* This is called by the update function  and loops through all of the
      * objects within your allEnemies array as defined in app.js and calls
      * their update() methods. It will then call the update function for your
